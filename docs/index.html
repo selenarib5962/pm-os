@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PM-OS — Property Management Operating System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #06090f;
+  --bg2: #0a0f1a;
+  --card: rgba(255,255,255,0.03);
+  --card2: rgba(255,255,255,0.06);
+  --border: rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.12);
+  --blue: #3b82f6;
+  --blue2: #60a5fa;
+  --blue-glow: rgba(59,130,246,0.15);
+  --cyan: #22d3ee;
+  --green: #34d399;
+  --green-bg: rgba(52,211,153,0.08);
+  --amber: #fbbf24;
+  --amber-bg: rgba(251,191,36,0.08);
+  --red: #f87171;
+  --red-bg: rgba(248,113,113,0.08);
+  --text: #e2e8f0;
+  --muted: #64748b;
+  --faint: #334155;
+  --ar: 'IBM Plex Sans Arabic', sans-serif;
+  --en: 'Outfit', sans-serif;
+  --mono: 'IBM Plex Mono', monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:var(--ar);min-height:100vh;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:rgba(59,130,246,0.3)}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--faint);border-radius:2px}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideRight{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
+@keyframes pulse-glow{0%,100%{box-shadow:0 0 20px rgba(59,130,246,0.1)}50%{box-shadow:0 0 40px rgba(59,130,246,0.2)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes countUp{from{opacity:0;transform:scale(0.8)}to{opacity:1;transform:scale(1)}}
+@keyframes grid-move{0%{background-position:0 0}100%{background-position:40px 40px}}
+
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+
+/* ═══ HERO ═══ */
+.hero{
+  position:relative;padding:80px 0 60px;text-align:center;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);
+  width:800px;height:800px;
+  background:radial-gradient(circle,rgba(59,130,246,0.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-grid{
+  position:absolute;inset:0;opacity:0.03;
+  background-image:linear-gradient(var(--border2) 1px,transparent 1px),linear-gradient(90deg,var(--border2) 1px,transparent 1px);
+  background-size:40px 40px;
+  animation:grid-move 20s linear infinite;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 16px;border-radius:100px;
+  background:var(--card2);border:1px solid var(--border2);
+  font-size:13px;color:var(--blue2);font-weight:500;
+  margin-bottom:24px;
+  animation:fadeUp 0.6s ease both;
+}
+.hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse-glow 2s infinite}
+.hero h1{
+  font-family:var(--en);font-size:clamp(48px,8vw,80px);font-weight:900;
+  line-height:1;letter-spacing:-2px;
+  background:linear-gradient(135deg,#fff 0%,var(--blue2) 50%,var(--cyan) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:16px;
+  animation:fadeUp 0.6s ease 0.1s both;
+}
+.hero-sub{
+  font-size:22px;font-weight:300;color:var(--muted);
+  margin-bottom:12px;
+  animation:fadeUp 0.6s ease 0.2s both;
+}
+.hero-desc{
+  font-size:15px;color:var(--faint);max-width:600px;margin:0 auto 32px;line-height:1.8;
+  animation:fadeUp 0.6s ease 0.3s both;
+}
+.hero-actions{
+  display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
+  animation:fadeUp 0.6s ease 0.4s both;
+}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:12px 28px;border-radius:10px;font-size:15px;font-weight:600;
+  text-decoration:none;transition:all 0.2s;cursor:pointer;border:none;
+  font-family:var(--ar);
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--blue),#2563eb);color:#fff;
+  box-shadow:0 4px 20px rgba(59,130,246,0.3);
+}
+.btn-primary:hover{box-shadow:0 4px 30px rgba(59,130,246,0.5);transform:translateY(-2px)}
+.btn-ghost{
+  background:var(--card2);color:var(--text);border:1px solid var(--border2);
+}
+.btn-ghost:hover{background:var(--card);border-color:var(--blue);transform:translateY(-2px)}
+
+/* ═══ STATS BAR ═══ */
+.stats-bar{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;
+  background:var(--border);border-radius:16px;overflow:hidden;
+  margin:48px 0;
+  animation:fadeUp 0.6s ease 0.5s both;
+}
+.stat-item{
+  background:var(--bg2);padding:24px 16px;text-align:center;
+}
+.stat-num{
+  font-family:var(--mono);font-size:28px;font-weight:700;
+  color:var(--blue2);
+  animation:countUp 0.5s ease both;
+}
+.stat-label{font-size:12px;color:var(--muted);margin-top:4px}
+
+/* ═══ SECTION ═══ */
+.section{padding:60px 0}
+.section-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:12px;font-weight:600;color:var(--blue2);
+  text-transform:uppercase;letter-spacing:1px;
+  margin-bottom:12px;font-family:var(--mono);
+}
+.section-title{
+  font-size:clamp(28px,4vw,36px);font-weight:700;
+  margin-bottom:8px;line-height:1.3;
+}
+.section-desc{font-size:14px;color:var(--muted);margin-bottom:40px;max-width:600px;line-height:1.7}
+
+/* ═══ FEATURE GRID ═══ */
+.features-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:16px;
+}
+.feature-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:28px;
+  transition:all 0.3s ease;position:relative;overflow:hidden;
+}
+.feature-card:hover{
+  border-color:var(--blue);background:var(--card2);
+  transform:translateY(-4px);
+  box-shadow:0 8px 40px rgba(59,130,246,0.08);
+}
+.feature-card::before{
+  content:'';position:absolute;top:0;right:0;width:100px;height:100px;
+  background:radial-gradient(circle,var(--blue-glow),transparent 70%);
+  opacity:0;transition:opacity 0.3s;
+}
+.feature-card:hover::before{opacity:1}
+.feature-icon{
+  width:44px;height:44px;border-radius:11px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;margin-bottom:16px;
+}
+.feature-icon.blue{background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.15)}
+.feature-icon.green{background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.15)}
+.feature-icon.amber{background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.15)}
+.feature-icon.red{background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.15)}
+.feature-icon.cyan{background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.15)}
+.feature-icon.purple{background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.15)}
+.feature-title{font-size:16px;font-weight:700;margin-bottom:6px}
+.feature-title-en{font-family:var(--en);font-size:12px;color:var(--faint);margin-bottom:10px;font-weight:400}
+.feature-desc{font-size:13px;color:var(--muted);line-height:1.8}
+.feature-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.feature-tag{
+  font-size:10px;font-family:var(--mono);
+  padding:3px 8px;border-radius:6px;
+  background:var(--card2);color:var(--faint);
+  border:1px solid var(--border);
+}
+
+/* ═══ TECH STACK ═══ */
+.tech-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.tech-item{
+  display:flex;align-items:center;gap:12px;
+  padding:16px;border-radius:12px;
+  background:var(--card);border:1px solid var(--border);
+  transition:all 0.2s;
+}
+.tech-item:hover{border-color:var(--border2);background:var(--card2)}
+.tech-icon{font-size:24px;width:40px;text-align:center;flex-shrink:0}
+.tech-name{font-size:14px;font-weight:600}
+.tech-role{font-size:11px;color:var(--muted)}
+
+/* ═══ ROADMAP ═══ */
+.roadmap{position:relative;padding-right:32px}
+.roadmap::before{
+  content:'';position:absolute;right:11px;top:0;bottom:0;width:2px;
+  background:linear-gradient(180deg,var(--blue),var(--faint),transparent);
+}
+.roadmap-item{position:relative;padding:0 0 32px 0}
+.roadmap-dot{
+  position:absolute;right:-32px;top:4px;width:22px;height:22px;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:10px;
+}
+.roadmap-dot.done{background:var(--green);color:#000}
+.roadmap-dot.next{background:var(--blue);color:#fff;animation:pulse-glow 2s infinite}
+.roadmap-dot.pending{background:var(--faint);color:var(--muted)}
+.roadmap-title{font-size:15px;font-weight:700}
+.roadmap-sub{font-size:12px;color:var(--muted);margin-top:2px}
+
+/* ═══ CTA ═══ */
+.cta{
+  text-align:center;padding:80px 0;position:relative;
+}
+.cta-box{
+  background:linear-gradient(135deg,rgba(59,130,246,0.08),rgba(34,211,238,0.05));
+  border:1px solid rgba(59,130,246,0.15);
+  border-radius:24px;padding:60px 40px;
+  position:relative;overflow:hidden;
+}
+.cta-box::before{
+  content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);
+  width:400px;height:400px;
+  background:radial-gradient(circle,rgba(59,130,246,0.1),transparent 70%);
+}
+.cta h2{font-size:32px;font-weight:800;margin-bottom:12px;position:relative}
+.cta p{font-size:15px;color:var(--muted);margin-bottom:28px;position:relative}
+
+/* ═══ FOOTER ═══ */
+.footer{
+  text-align:center;padding:32px 0;
+  border-top:1px solid var(--border);
+  font-size:12px;color:var(--faint);
+}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:768px){
+  .hero{padding:48px 0 32px}
+  .hero h1{font-size:40px;letter-spacing:-1px}
+  .features-grid{grid-template-columns:1fr}
+  .stats-bar{grid-template-columns:repeat(2,1fr)}
+  .tech-grid{grid-template-columns:repeat(2,1fr)}
+  .cta-box{padding:40px 20px}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="container" style="position:relative">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      <span>Open Source — Phase 0 Released</span>
+    </div>
+    <h1>PM-OS</h1>
+    <p class="hero-sub">منصة إدارة الأملاك والعقارات</p>
+    <p class="hero-desc">
+      Property Management Operating System
+      <br>
+      نظام SaaS متكامل لشركات إدارة الأملاك — مبني على Laravel 11
+      <br>
+      مصمم للسوق السعودي مع دعم كامل للعربية
+    </p>
+    <div class="hero-actions">
+      <a href="https://github.com/iRaed/pm-os" target="_blank" class="btn btn-primary">
+        ⭐ GitHub Repository
+      </a>
+      <a href="#features" class="btn btn-ghost">
+        المميزات ↓
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ STATS ═══════════ -->
+<div class="container">
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-num">75+</div>
+      <div class="stat-label">ملف</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">25+</div>
+      <div class="stat-label">جدول Database</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">14</div>
+      <div class="stat-label">Model</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">70+</div>
+      <div class="stat-label">صلاحية</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">7</div>
+      <div class="stat-label">أدوار</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">17</div>
+      <div class="stat-label">Module</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ FEATURES ═══════════ -->
+<section class="section" id="features">
+<div class="container">
+  <div class="section-tag">// FEATURES</div>
+  <h2 class="section-title">المميزات</h2>
+  <p class="section-desc">٢٠ مجال تشغيلي في نظام واحد — من استلام العقار إلى التوسع الاستراتيجي</p>
+
+  <div class="features-grid">
+
+    <!-- 1 -->
+    <div class="feature-card">
+      <div class="feature-icon blue">🏗️</div>
+      <div class="feature-title">تهيئة العقار للإدارة</div>
+      <div class="feature-title-en">Property Onboarding</div>
+      <div class="feature-desc">
+        استلام رقمي مع Checklist فني ومعاينة ميدانية وتصوير. حصر وثائق (صكوك، رخص، مخططات). تقييم مخاطر أولي. محضر تسليم بتوقيع إلكتروني. دعم ٩ أنواع عقارية.
+      </div>
+      <div class="feature-tags">
+        <span class="feature-tag">9 أنواع عقارية</span>
+        <span class="feature-tag">معاينة ميدانية</span>
+        <span class="feature-tag">توقيع إلكتروني</span>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="feature-card">
+      <div class="feature-icon green">📋</div>
+      <div class="feature-title">التأجير وإشغال الوحدات</div>
+      <div class="feature-title-en">Leasing & Occupancy</div>
+      <div class="feature-desc">
+        دورة تأجير كاملة: تقييم شواغر ← تسعير ذكي ← تسويق ← فحص مستأجر ← تفاوض ← عقد إلكتروني. جاهز للربط مع منصة إيجار. تجديد تلقائي مع نسبة زيادة.
+      </div>
+      <div class="feature-tags">
+        <span class="feature-tag">تسعير ذكي</span>
+        <span class="feature-tag">إيجار Ready</span>
+        <span class="feature-tag">تجديد تلقائي</span>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="feature-card">
+      <div class="feature-icon amber">💰</div>
+      <div class="feature-title">التحصيل وإدارة الذمم</div>
+      <div class="feature-title-en">Collection & Receivables</div>
+      <div class="feature-desc">
+        فوترة تلقائية من العقود. تذكيرات SMS + WhatsApp + Email. تصعيد متدرج: محصّل ← مشرف ← مدير ← قانوني. Aging Report: ٣٠/٦٠/٩٠/١٢٠+ يوم. جاهز لسداد وزاتكا.
+      </div>
+      <div class="feature-tags">
+        <span class="feature-tag">فوترة تلقائية</span>
+        <span class="feature-tag">سداد</span>
+        <span class="feature-tag">زاتكا</span>
+        <span class="feature-tag">تصعيد تلقائي</span>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="feature-card">
+      <div class="feature-icon red">🔧</div>
+      <div class="feature-title">الصيانة والتشغيل</div>
+      <div class="feature-title-en">Maintenance & Operations</div>
+      <div class="feature-desc">
+        أوامر عمل بـ SLA (طارئ ٤ ساعات، عالي ٢٤ ساعة). صيانة وقائية تلقائية للمصاعد والمكيفات والحريق. إدارة مقاولين مع تقييم أداء. صور قبل/بعد. QA Checklist.
+      </div>
+      <div class="feature-tags">
+        <span class="feature-tag">SLA Tracking</span>
+        <span class="feature-tag">صيانة وقائية</span>
+        <span class="feature-tag">تقييم مقاولين</span>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="feature-card">
+      <div class="feature-icon cyan">📊</div>
+      <div class="feature-title">الإدارة المالية والتقارير</div>
+      <div class="feature-title-en">Finance & Reporting</div>
+      <div class="feature-desc">
+        دفتر أستاذ لكل عقار. كشوف ملاك تلقائية شهرية. ميزانيات وتخطيط رأسمالي. لوحات مؤشرات KPI. تقارير إشغال وتحصيل وصيانة. ملخص تنفيذي بالذكاء الاصطناعي.
+      </div>
+      <div class="feature-tags">
+        <span class="feature-tag">كشوف ملاك</span>
+        <span class="feature-tag">NOI</span>
+        <span class="feature-tag">KPI Dashboards</span>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="feature-card">
+      <div class="feature-icon purple">🤖</div>
+      <div class="feature-title">الذكاء الاصطناعي</div>
+      <div class="feature-title-en">AI Engine</div>
+      <div class="feature-desc">
+        ملخص تنفيذي شهري يُولّد تلقائياً بالعربي. وصف إعلاني ذكي للوحدات الشاغرة. تقييم المستأجرين المحتملين. تحليل مخاطر المحفظة. تصنيف بلاغات الصيانة تلقائياً.
+      </div>
+      <div class="feature-tags">
+        <span class="feature-tag">OpenAI</span>
+        <span class="feature-tag">تقارير ذكية</span>
+        <span class="feature-tag">Tenant Scoring</span>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="feature-card">
+      <div class="feature-icon green">👥</div>
+      <div class="feature-title">إدارة المستأجرين</div>
+      <div class="feature-title-en">Tenant Management</div>
+      <div class="feature-desc">
+        دورة حياة كاملة: Welcome Kit ← استلام ← تواصل ← طلبات ← شكاوى ← تجديد ← إخلاء. بوابة مستأجر. تنبيهات تجديد قبل ٩٠/٦٠/٣٠ يوم. Retention Score.
+      </div>
+      <div class="feature-tags">
+        <span class="feature-tag">بوابة مستأجر</span>
+        <span class="feature-tag">SLA تذاكر</span>
+        <span class="feature-tag">Retention</span>
+      </div>
+    </div>
+
+    <!-- 8 -->
+    <div class="feature-card">
+      <div class="feature-icon blue">⚖️</div>
+      <div class="feature-title">الحوكمة وجمعيات الملاك</div>
+      <div class="feature-title-en">Governance & HOA</div>
+      <div class="feature-desc">
+        امتثال تنظيمي (بلدية، دفاع مدني، إيجار). تتبع التأمينات والرخص. إدارة مخالفات. جمعيات ملاك: اجتماعات، تصويت، محاضر، رسوم مشتركة. سجل مخاطر كامل.
+      </div>
+      <div class="feature-tags">
+        <span class="feature-tag">HOA</span>
+        <span class="feature-tag">Risk Register</span>
+        <span class="feature-tag">تفتيش</span>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="feature-card">
+      <div class="feature-icon amber">🔐</div>
+      <div class="feature-title">Multi-Tenant SaaS</div>
+      <div class="feature-title-en">Database-per-Tenant Isolation</div>
+      <div class="feature-desc">
+        كل شركة إدارة أملاك = قاعدة بيانات مستقلة تماماً. عزل كامل للبيانات. ٧ أدوار (مدير عام، مدير عقارات، محاسب، محصّل، فني، مشرف صيانة، استقبال) مع ٧٠+ صلاحية.
+      </div>
+      <div class="feature-tags">
+        <span class="feature-tag">DB-per-Tenant</span>
+        <span class="feature-tag">RBAC</span>
+        <span class="feature-tag">Sanctum</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- ═══════════ TECH STACK ═══════════ -->
+<section class="section">
+<div class="container">
+  <div class="section-tag">// TECH STACK</div>
+  <h2 class="section-title">التقنيات</h2>
+  <p class="section-desc">بنية معمارية Modular Monolith جاهزة للتحول لـ Microservices</p>
+
+  <div class="tech-grid">
+    <div class="tech-item">
+      <div class="tech-icon">🔴</div>
+      <div><div class="tech-name">Laravel 11</div><div class="tech-role">Backend Framework</div></div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-icon">💚</div>
+      <div><div class="tech-name">Vue 3 + Inertia</div><div class="tech-role">Frontend SPA</div></div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-icon">🐘</div>
+      <div><div class="tech-name">PostgreSQL + PostGIS</div><div class="tech-role">Database + Spatial</div></div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-icon">⚡</div>
+      <div><div class="tech-name">Redis + Horizon</div><div class="tech-role">Cache & Queue</div></div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-icon">🔌</div>
+      <div><div class="tech-name">Laravel Reverb</div><div class="tech-role">WebSocket</div></div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-icon">🏢</div>
+      <div><div class="tech-name">Stancl/Tenancy</div><div class="tech-role">Multi-Tenancy</div></div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-icon">🛡️</div>
+      <div><div class="tech-name">Spatie Permission</div><div class="tech-role">RBAC</div></div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-icon">🤖</div>
+      <div><div class="tech-name">OpenAI API</div><div class="tech-role">AI Engine</div></div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-icon">🐳</div>
+      <div><div class="tech-name">Docker Compose</div><div class="tech-role">Infrastructure</div></div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-icon">🎨</div>
+      <div><div class="tech-name">Tailwind CSS</div><div class="tech-role">RTL Arabic UI</div></div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-icon">📦</div>
+      <div><div class="tech-name">MinIO (S3)</div><div class="tech-role">Object Storage</div></div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-icon">🔑</div>
+      <div><div class="tech-name">Sanctum</div><div class="tech-role">API Authentication</div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════ ROADMAP ═══════════ -->
+<section class="section">
+<div class="container">
+  <div class="section-tag">// ROADMAP</div>
+  <h2 class="section-title">خارطة الطريق</h2>
+  <p class="section-desc">١٢ مرحلة — MVP جاهز خلال ٥ أشهر</p>
+
+  <div class="roadmap">
+    <div class="roadmap-item">
+      <div class="roadmap-dot done">✓</div>
+      <div class="roadmap-title">Phase 0 — البنية التحتية</div>
+      <div class="roadmap-sub">Multi-Tenancy, RBAC, Database Schema, Docker, API Routes, Vue Frontend</div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-dot next">→</div>
+      <div class="roadmap-title">Phase 1 — تهيئة العقار</div>
+      <div class="roadmap-sub">استلام، معاينة، وثائق، تقييم مخاطر، محضر تسليم</div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-dot pending">2</div>
+      <div class="roadmap-title">Phase 2 — التأجير</div>
+      <div class="roadmap-sub">تسعير، تسويق، فحص مستأجرين، عقود</div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-dot pending">3</div>
+      <div class="roadmap-title">Phase 3 — إدارة المستأجرين</div>
+      <div class="roadmap-sub">بوابة مستأجر، تذاكر، تجديد، إخلاء</div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-dot pending">4</div>
+      <div class="roadmap-title">Phase 4 — التحصيل</div>
+      <div class="roadmap-sub">فوترة تلقائية، تذكيرات، تصعيد، سداد/زاتكا</div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-dot pending">5</div>
+      <div class="roadmap-title">Phase 5–11 — المالية، الصيانة، الحوكمة، التقارير، النمو</div>
+      <div class="roadmap-sub">المحاسبة، أوامر العمل، الامتثال، لوحات المؤشرات، الاستراتيجية</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════ CTA ═══════════ -->
+<section class="cta">
+<div class="container">
+  <div class="cta-box">
+    <h2>Open Source — مفتوح المصدر</h2>
+    <p>MIT License — استخدمه، عدّل عليه، ساهم فيه</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a href="https://github.com/iRaed/pm-os" target="_blank" class="btn btn-primary">
+        ⭐ Star on GitHub
+      </a>
+      <a href="https://github.com/iRaed/pm-os/fork" target="_blank" class="btn btn-ghost">
+        🍴 Fork
+      </a>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer class="footer">
+  <div class="container">
+    PM-OS v0.1.0 — Built for the Saudi PropTech ecosystem
+  </div>
+</footer>
+
+</body>
+</html>
